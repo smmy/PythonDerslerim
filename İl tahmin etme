@@ -1,0 +1,83 @@
+# -*- coding: utf8 -*-
+import random
+
+
+class DosyadanOku():
+    def dosyaOku(self):
+        self.dosya = open("iller.txt", "r", encoding="utf8")
+        self.okunanİller = self.dosya.readlines()
+        liste = DosyadanOku().rasgeleSec(self.okunanİller)
+        return liste
+
+    def rasgeleSec(self, oku):
+        liste = []
+        for i in range(len(oku)):
+            liste.append(oku[i].strip())
+
+        return random.choice(liste)
+
+
+class AdamAsmaca():
+    def kontrolEt(self, liste, kopyaListe, tahmin):
+        self.kopyaListe = kopyaListe
+        sayac = 5
+        self.liste = liste
+
+        while sayac > 0:
+
+            harf = input("Harf al: ")
+            say = 0
+            if harf != tahmin:
+
+                for i in range(len(kopyaListe)):
+
+                    if self.kopyaListe[i] == harf:
+                        liste[i] = harf
+
+                print(AdamAsmaca().listele(liste)) #düzenli yazdırma
+
+            elif harf == tahmin:
+                print("Brovoooooo")
+                break;
+
+            sayac -= 1
+            print(sayac, " hakkınız kaldı")
+
+        if sayac == 0:
+            print("Başaramadınız. ")
+            print("il: ", kopyaListe)
+
+    def degistir(self, kopyaListe):
+        self.kopyaListe = kopyaListe.copy()
+
+        return self.kopyaListe
+    def listele(self,liste):
+        karakter = ""
+        for i in liste:
+            karakter += i + " "
+        return karakter
+
+    def sifrele(self, liste):
+        for i in range(len(liste)):
+            liste[i] = "_"
+
+        return liste
+ 
+    def main(self, metin):
+
+        print("İl Tahmin Oyununa Hoş Geldiniz")
+        print(len(metin), " karakterli il tahmin edin")
+        self.metin = metin
+        liste = list(metin)
+        kopyaListesi = AdamAsmaca.degistir(self, liste)
+        sifreliAl = AdamAsmaca.sifrele(self, liste)  # Şifreli döndürdük.
+        print(AdamAsmaca().listele(liste))
+        AdamAsmaca.kontrolEt(self, liste, kopyaListesi, self.metin)
+
+
+if __name__ == "__main__":
+    # program girişi buraya yazılacak. While döngüsü vs.
+    metin = "hasan"
+    dosyaOku = DosyadanOku()
+    menu = AdamAsmaca()
+    menu.main(dosyaOku.dosyaOku())
